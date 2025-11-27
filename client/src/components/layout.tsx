@@ -5,10 +5,12 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import bgImage from "@assets/generated_images/dark_quantum_encryption_background_texture.png";
+import { useMetrics } from "@/hooks/use-events";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [location] = useLocation();
   const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const { data: metrics } = useMetrics();
 
   const navItems = [
     { icon: Activity, label: "Stream", path: "/" },
@@ -41,6 +43,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     ? "bg-primary/10 text-primary border border-primary/20 shadow-[0_0_15px_rgba(0,243,255,0.1)]"
                     : "text-muted-foreground hover:text-foreground hover:bg-white/5"
                 )}
+                data-testid={`nav-${item.path}`}
               >
                 <item.icon className={cn("w-5 h-5", isActive && "text-primary")} />
                 <span className="font-medium">{item.label}</span>
@@ -59,11 +62,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <div className="relative z-10">
             <div className="text-xs text-muted-foreground font-mono mb-2">STORAGE</div>
             <div className="h-1.5 bg-secondary rounded-full overflow-hidden mb-2">
-              <div className="h-full bg-primary w-[78%] shadow-[0_0_10px_var(--primary)]" />
+              <div 
+                className="h-full bg-primary shadow-[0_0_10px_var(--primary)]" 
+                style={{ width: `${metrics?.storagePercentage || 82}%` }}
+              />
             </div>
             <div className="flex justify-between text-xs font-mono text-foreground/80">
-              <span>14.2 TB</span>
-              <span>82%</span>
+              <span>{metrics?.storageUsedTb || 14}.2 TB</span>
+              <span>{metrics?.storagePercentage || 82}%</span>
             </div>
           </div>
         </div>

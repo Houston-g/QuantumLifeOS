@@ -2,8 +2,11 @@ import OmniSearch from "@/components/omni-search";
 import StreamFeed from "@/components/stream-feed";
 import EncryptionStatus from "@/components/encryption-status";
 import { motion } from "framer-motion";
+import { useMetrics } from "@/hooks/use-events";
 
 export default function Dashboard() {
+  const { data: metrics } = useMetrics();
+
   return (
     <div className="space-y-8">
       {/* Hero Search Section */}
@@ -22,7 +25,7 @@ export default function Dashboard() {
             transition={{ delay: 0.2 }}
             className="text-muted-foreground font-mono text-sm"
           >
-            System is operating at 98% efficiency. 2,431 moments archived today.
+            System is operating at 98% efficiency. {metrics?.eventsToday || 0} moments archived today.
           </motion.p>
         </div>
         <OmniSearch />

@@ -1,7 +1,8 @@
 import { Search, Command, Mic } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
+import CreateEventDialog from "./create-event-dialog";
 
 export default function OmniSearch() {
   const [query, setQuery] = useState("");
@@ -30,10 +31,7 @@ export default function OmniSearch() {
             data-testid="input-omni-search"
           />
           <div className="pr-4 flex items-center space-x-2">
-            <div className="h-6 w-[1px] bg-border mx-2" />
-            <button className="p-2 hover:bg-primary/10 rounded-md transition-colors group">
-              <Mic className="w-4 h-4 text-muted-foreground group-hover:text-primary" />
-            </button>
+            <CreateEventDialog />
           </div>
         </div>
       </motion.div>
